@@ -4,7 +4,9 @@ import org.jboss.set.aphrodite.Aphrodite;
 import org.jboss.set.aphrodite.config.AphroditeConfig;
 import org.jboss.set.aphrodite.config.IssueTrackerConfig;
 import org.jboss.set.aphrodite.config.RepositoryConfig;
+import org.jboss.set.aphrodite.config.TrackerType;
 import org.jboss.set.aphrodite.domain.*;
+import org.jboss.set.aphrodite.repository.services.common.RepositoryType;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -16,11 +18,11 @@ import java.util.List;
 public class ProgrammaticConfiguration {
     public static void main(String[] args) throws Exception {
         IssueTrackerConfig jiraService =
-                new IssueTrackerConfig("https://issues.stage.jboss.org", "username", "password", "bugzilla");
+                new IssueTrackerConfig("https://issues.stage.jboss.org", "username", "password", TrackerType.JIRA, -1);
         List<IssueTrackerConfig> issueTrackerConfigs = new ArrayList<>();
         issueTrackerConfigs.add(jiraService);
 
-        RepositoryConfig githubService = new RepositoryConfig("https://github.com/", "username", "password", "github");
+        RepositoryConfig githubService = new RepositoryConfig("https://github.com/", "username", "password", RepositoryType.GITHUB);
         List<RepositoryConfig> repositoryConfigs = new ArrayList<>();
         repositoryConfigs.add(githubService);
 
