@@ -5,58 +5,44 @@ import org.jboss.set.aphrodite.config.AphroditeConfig;
 import org.jboss.set.aphrodite.config.IssueTrackerConfig;
 import org.jboss.set.aphrodite.config.RepositoryConfig;
 import org.jboss.set.aphrodite.config.TrackerType;
-import org.jboss.set.aphrodite.domain.*;
 import org.jboss.set.aphrodite.repository.services.common.RepositoryType;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Ryan Emerson
  */
 public class ProgrammaticConfiguration {
     public static void main(String[] args) throws Exception {
+        // Jira
         IssueTrackerConfig jiraService =
-                new IssueTrackerConfig("https://issues.stage.jboss.org", "username", "password", TrackerType.JIRA, -1);
+                new IssueTrackerConfig("https://issues.stage.jboss.org",
+                        "username",
+                        "password",
+                        TrackerType.JIRA,
+                        -1);
+
         List<IssueTrackerConfig> issueTrackerConfigs = new ArrayList<>();
         issueTrackerConfigs.add(jiraService);
 
-        RepositoryConfig githubService = new RepositoryConfig("https://github.com/", "username", "password", RepositoryType.GITHUB);
+
+        // Github
+        RepositoryConfig githubService =
+                new RepositoryConfig("https://github.com/",
+                        "username",
+                        "password",
+                        RepositoryType.GITHUB);
+
         List<RepositoryConfig> repositoryConfigs = new ArrayList<>();
         repositoryConfigs.add(githubService);
 
-        AphroditeConfig config = new AphroditeConfig(issueTrackerConfigs, repositoryConfigs);
-        Aphrodite aphrodite = Aphrodite.instance(config);
-
-        // Search Issues
-        SearchCriteria sc = new SearchCriteria.Builder()
-                .setStatus(IssueStatus.MODIFIED)
-                .setProduct("JBoss Enterprise Application Platform 6")
-                .build();
-        List<Issue> result = aphrodite.searchIssues(sc);
-        System.out.println(result);
-
-        // Get individual Issue
-        Issue issue = aphrodite.getIssue(new URL("https://issues.stage.jboss.org/browse/WFLY-100"));
-
-        // Update issue
-        issue.setAssignee("ryanemerson");
-        aphrodite.updateIssue(issue);
-
-        // Get individual Patch
-        Patch patch = aphrodite.getPatch(new URL("https://github.com/ryanemerson/aphrodite_test/pull/1"));
-
-        // Get code repository
-        Repository repository = aphrodite.getRepository(new URL("https://github.com/ryanemerson/aphrodite_test"));
-
-        // Get all patches associated with a given issue
-        List<Patch> patches = aphrodite.getPatchesAssociatedWith(issue);
-
-        // Get patches based upon their status e.g. open PRs
-        patches = aphrodite.getPatchesByStatus(repository, PatchStatus.OPEN);
-
-        // Add a comment to a patch
-        aphrodite.addCommentToPatch(patch, "Example Comment");
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        AphroditeConfig config = new AphroditeConfig(executorService, issueTrackerConfigs, repositoryConfigs);
+        try (Aphrodite aphrodite = Aphrodite.instance(config)) {
+            // Perform some operations
+        }
     }
 }
