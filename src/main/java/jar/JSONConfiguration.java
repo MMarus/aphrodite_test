@@ -75,7 +75,7 @@ public class JSONConfiguration {
         System.out.println("Executing " + name + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         Issue issue = aphrodite.getIssue(new URL("https://issues.stage.jboss.org/browse/WFCORE-751"));
-        issue.setAssignee("ryanemerson");
+        issue.setAssignee("jboss-set");
         issue.setSummary(issue.getSummary() + " | test update");
         aphrodite.updateIssue(issue);
         issue = aphrodite.getIssue(new URL("https://issues.stage.jboss.org/browse/WFCORE-751"));
@@ -113,7 +113,7 @@ public class JSONConfiguration {
         String name = new Object(){}.getClass().getEnclosingMethod().getName();
         System.out.println("Executing " + name + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-        Patch patch = aphrodite.getPatch(new URL("https://github.com/ryanemerson/aphrodite_test/pull/1"));
+        Patch patch = aphrodite.getPatch(new URL("https://github.com/jboss-set/aphrodite_test/pull/1"));
         System.out.println(patch);
     }
 
@@ -121,7 +121,7 @@ public class JSONConfiguration {
         String name = new Object(){}.getClass().getEnclosingMethod().getName();
         System.out.println("Executing " + name + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-        Repository repository = aphrodite.getRepository(new URL("https://github.com/ryanemerson/aphrodite_test"));
+        Repository repository = aphrodite.getRepository(new URL("https://github.com/jboss-set/aphrodite_test"));
         System.out.println(repository);
     }
 
@@ -129,7 +129,7 @@ public class JSONConfiguration {
         String name = new Object(){}.getClass().getEnclosingMethod().getName();
         System.out.println("Executing " + name + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-        Repository repository = aphrodite.getRepository(new URL("https://github.com/ryanemerson/aphrodite_test"));
+        Repository repository = aphrodite.getRepository(new URL("https://github.com/jboss-set/aphrodite_test"));
         List<Patch> patches = aphrodite.getPatchesByState(repository, PatchState.OPEN);
         System.out.println(patches.size());
     }
@@ -138,7 +138,7 @@ public class JSONConfiguration {
         String name = new Object(){}.getClass().getEnclosingMethod().getName();
         System.out.println("Executing " + name + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-        Patch patch = aphrodite.getPatch(new URL("https://github.com/ryanemerson/aphrodite_test/pull/1"));
+        Patch patch = aphrodite.getPatch(new URL("https://github.com/jboss-set/aphrodite_test/pull/1"));
         aphrodite.addCommentToPatch(patch, "Example Comment");
     }
 
@@ -146,10 +146,10 @@ public class JSONConfiguration {
         String name = new Object(){}.getClass().getEnclosingMethod().getName();
         System.out.println("Executing " + name + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-        Repository repository = aphrodite.getRepository(new URL("https://github.com/ryanemerson/aphrodite_test"));
+        Repository repository = aphrodite.getRepository(new URL("https://github.com/jboss-set/aphrodite_test"));
         List<Label> labels = aphrodite.getLabelsFromRepository(repository);
         System.out.println("Repository Labels: " + labels);
-        Patch patch = aphrodite.getPatch(new URL("https://github.com/ryanemerson/aphrodite_test/pull/1"));
+        Patch patch = aphrodite.getPatch(new URL("https://github.com/jboss-set/aphrodite_test/pull/1"));
         System.out.println("Current Labels: " + aphrodite.getLabelsFromPatch(patch));
         aphrodite.setLabelsToPatch(patch, labels);
         aphrodite.removeLabelFromPatch(patch, labels.get(0).getName());
