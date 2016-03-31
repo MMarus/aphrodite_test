@@ -147,12 +147,12 @@ public class JSONConfiguration {
         String name = new Object(){}.getClass().getEnclosingMethod().getName();
         System.out.println("Executing " + name + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-        Patch patch = aphrodite.getPatch(new URL("https://github.com/jboss-set/aphrodite_test/pull/1"));
-        System.out.println("Permission to add Label to patch: " + aphrodite.patchLabelCanBeModified(patch));
+        Repository repository = aphrodite.getRepository(new URL("https://github.com/jboss-set/aphrodite_test"));
+        System.out.println("Permission to add Label to patch: " + aphrodite.isRepositoryLabelsModifiable(repository));
 
         // Should be false
-        patch = aphrodite.getPatch(new URL("https://github.com/eclipse/egit-github/pull/3"));
-        System.out.println("Permission to add Label to patch: " + aphrodite.patchLabelCanBeModified(patch));
+        repository = aphrodite.getRepository(new URL("https://github.com/eclipse/egit-github"));
+        System.out.println("Permission to add Label to patch: " + aphrodite.isRepositoryLabelsModifiable(repository));
     }
 
     private static void addLabelToPatch(Aphrodite aphrodite) throws Exception {
