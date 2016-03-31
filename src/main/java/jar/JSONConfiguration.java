@@ -25,6 +25,7 @@ public class JSONConfiguration {
             getRepository(aphrodite);
             getPatchesByState(aphrodite);
             addCommentToPatch(aphrodite);
+            checkLabelPermissions(aphrodite);
             addLabelToPatch(aphrodite);
             getPatchesAssociatedWithPatch(aphrodite);
             getCommitStatusFromPatch(aphrodite);
@@ -140,6 +141,18 @@ public class JSONConfiguration {
 
         Patch patch = aphrodite.getPatch(new URL("https://github.com/jboss-set/aphrodite_test/pull/1"));
         aphrodite.addCommentToPatch(patch, "Example Comment");
+    }
+
+    private static void checkLabelPermissions(Aphrodite aphrodite) throws Exception {
+        String name = new Object(){}.getClass().getEnclosingMethod().getName();
+        System.out.println("Executing " + name + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        Patch patch = aphrodite.getPatch(new URL("https://github.com/jboss-set/aphrodite_test/pull/1"));
+        System.out.println("Permission to add Label to patch: " + aphrodite.patchLabelCanBeModified(patch));
+
+        // Should be false
+        patch = aphrodite.getPatch(new URL("https://github.com/eclipse/egit-github/pull/3"));
+        System.out.println("Permission to add Label to patch: " + aphrodite.patchLabelCanBeModified(patch));
     }
 
     private static void addLabelToPatch(Aphrodite aphrodite) throws Exception {
