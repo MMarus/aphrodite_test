@@ -76,7 +76,7 @@ public class JSONConfiguration {
         System.out.println("Executing " + name + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         Issue issue = aphrodite.getIssue(new URL("https://issues.stage.jboss.org/browse/WFCORE-751"));
-        issue.setAssignee("jboss-set");
+        issue.setAssignee(new User("jboss-set@redhat.com", "jboss-set"));
         issue.setSummary(issue.getSummary() + " | test update");
         aphrodite.updateIssue(issue);
         issue = aphrodite.getIssue(new URL("https://issues.stage.jboss.org/browse/WFCORE-751"));
