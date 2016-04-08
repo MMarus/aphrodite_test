@@ -213,10 +213,10 @@ public class JSONConfiguration {
     }
 
     private static void getRepositories(Aphrodite aphrodite) throws Exception {
-        List<URL> repoUrls = aphrodite.getAllRepositoryURLs();
+        List<Repository> repoUrls = aphrodite.getDistinctURLRepositoriesFromStreams();
         System.out.println(repoUrls.size());
 
-        repoUrls = aphrodite.getRepositoryURLsByStream("wildfly");
+        repoUrls = aphrodite.getDistinctURLRepositoriesByStream("wildfly");
         System.out.println(repoUrls.size());
     }
 
@@ -231,7 +231,7 @@ public class JSONConfiguration {
     }
 
     private static void getComponentNameBy(Aphrodite aphrodite) throws Exception {
-        System.out.println(aphrodite.getComponentNamesBy(new Repository(new URL("https://github.com/hal/core")), new Codebase("master")));
+        System.out.println(aphrodite.getComponentBy(new Repository(new URL("https://github.com/hal/core")), new Codebase("master")));
     }
 
 }
