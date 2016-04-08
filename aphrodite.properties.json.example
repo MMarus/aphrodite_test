@@ -24,5 +24,11 @@
             "password": "pass",
             "type": "GITHUB"
         }
+    ],
+    "streamConfigs": [
+        {
+            "url": "https://raw.githubusercontent.com/jboss-set/jboss-streams/master/streams.json",
+            "type": "JSON"
+        }
     ]
 }

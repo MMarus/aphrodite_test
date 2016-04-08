@@ -29,6 +29,11 @@ public class JSONConfiguration {
             addLabelToPatch(aphrodite);
             getPatchesAssociatedWithPatch(aphrodite);
             getCommitStatusFromPatch(aphrodite);
+
+            // Stream service
+            getRepositories(aphrodite);
+            getStreams(aphrodite);
+            getComponentNameBy(aphrodite);
         }
     }
 
@@ -75,9 +80,30 @@ public class JSONConfiguration {
         String name = new Object(){}.getClass().getEnclosingMethod().getName();
         System.out.println("Executing " + name + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-        Issue issue = aphrodite.getIssue(new URL("https://issues.stage.jboss.org/browse/WFCORE-751"));
-        issue.setAssignee(new User("jboss-set@redhat.com", "jboss-set"));
-        issue.setSummary(issue.getSummary() + " | test update");
+        Issue issue = aphrodite.getIssue(new URL("https://issues.stage.jboss.org/browse/JBEAP-291"));
+//        Issue issue = aphrodite.getIssue(new URL("https://issues.stage.jboss.org/browse/WFCORE-751"));
+//        Issue issue = aphrodite.getIssue(new URL("https://partner-bugzilla.redhat.com/show_bug.cgi?id=1231916"));
+//        System.out.println(issue.getReleases());
+//        List<Release> releases = new ArrayList<>();
+//        releases.add(new Release("6.2.3"));
+//        releases.add(new Release("1.0.0.CR6"));
+//        releases.add(new Release("1.0.0.CR7"));
+//        issue.setReleases(releases);
+
+//        Map<String, FlagStatus> stream = new HashMap<>();
+//        stream.put("jboss‑eap‑6.4.z", FlagStatus.SET);
+//        issue.setStreamStatus(stream);
+
+//        Stage stage = new Stage();
+//        stage.setStatus(Flag.DEV, FlagStatus.SET);
+//        issue.setStage(stage);
+
+        issue.setAssignee(new User("remerson@redhat.com", "ryanemerson"));
+//        issue.setSummary("Failed to initialize Aesh console while starting CLI on fresh Windows 2k8");
+//        issue.getDependsOn().add(new URL("https://issues.stage.jboss.org/browse/WFCORE-750"));
+//        issue.getBlocks().add(new URL("https://issues.stage.jboss.org/browse/WFCORE-749"));
+        System.out.println(issue.getReporter());
+        System.out.println(issue.getAssignee());
         aphrodite.updateIssue(issue);
         issue = aphrodite.getIssue(new URL("https://issues.stage.jboss.org/browse/WFCORE-751"));
         System.out.println(issue);
@@ -184,6 +210,28 @@ public class JSONConfiguration {
         Patch patch = aphrodite.getPatch(new URL("https://github.com/jboss-set/aphrodite/pull/54"));
         aphrodite.getCommitStatusFromPatch(patch);
         System.out.println(aphrodite.getCommitStatusFromPatch(patch));
+    }
+
+    private static void getRepositories(Aphrodite aphrodite) throws Exception {
+        List<URL> repoUrls = aphrodite.getAllRepositoryURLs();
+        System.out.println(repoUrls.size());
+
+        repoUrls = aphrodite.getRepositoryURLsByStream("wildfly");
+        System.out.println(repoUrls.size());
+    }
+
+    private static void getStreams(Aphrodite aphrodite) throws Exception {
+        List<Stream> streams = aphrodite.getAllStreams();
+        System.out.println(streams.size());
+
+        streams = aphrodite.getStreamsBy(new Repository(new URL("https://github.com/aeshell/aesh")), new Codebase("master"));
+        System.out.println(streams.size());
+
+        System.out.println(aphrodite.getStream("wildfly"));
+    }
+
+    private static void getComponentNameBy(Aphrodite aphrodite) throws Exception {
+        System.out.println(aphrodite.getComponentNamesBy(new Repository(new URL("https://github.com/hal/core")), new Codebase("master")));
     }
 
 }
